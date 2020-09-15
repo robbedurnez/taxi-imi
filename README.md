@@ -1,7 +1,5 @@
 # Taxi! 
 
-![Build and test](https://github.com/howest-gp-imi/st-1920-2-S3-project-robbedurnez/workflows/Build%20and%20test/badge.svg)
-
 ## Project
 Taxi! is een platform om een taxi te kunnen bestellen. 
 Gebruikers kunnen via een kaart beschikbare taxi's zien en kunnen, na het bekijken van een overzicht, de taxi bestellen.
