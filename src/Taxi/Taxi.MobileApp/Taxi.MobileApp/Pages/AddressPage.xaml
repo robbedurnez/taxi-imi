@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:controls="clr-namespace:Taxi.MobileApp.Controls;assembly=Taxi.MobileApp"
+             mc:Ignorable="d"
+             x:Class="Taxi.MobileApp.Pages.AddressPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save"
+                     Command="{Binding SaveAddressCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" Class="ValidationError">
+                <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <StackLayout Style="{StaticResource Wrapper}">
+                <Label Text="Addressline 1" Style="{StaticResource DefaultLabel}" Margin="0, 20, 0, 0" />
+                <controls:CustomEntry Text="{Binding AddressLine1}" Style="{StaticResource Entry}" />
+                <Label Text="{Binding AddressLine1Error}" StyleClass="ValidationError" />
+                <Label Text="Addressline 2" Style="{StaticResource DefaultLabel}" />
+                <controls:CustomEntry Text="{Binding AddressLine2}" Style="{StaticResource Entry}" />
+                <Label Text="Postal code" Style="{StaticResource DefaultLabel}" />
+                <controls:CustomEntry Text="{Binding PostalCode}" Style="{StaticResource Entry}" />
+                <Label Text="{Binding PostalCodeError}" StyleClass="ValidationError" />
+                <Label Text="City" Style="{StaticResource DefaultLabel}" />
+                <controls:CustomEntry Text="{Binding City}" Style="{StaticResource Entry}" />
+                <Label Text="{Binding CityError}" StyleClass="ValidationError" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

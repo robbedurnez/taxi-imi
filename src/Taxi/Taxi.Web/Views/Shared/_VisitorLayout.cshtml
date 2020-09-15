@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/materialize/css/materialize.css" />
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/materialize/js/materialize.js"></script>
+    @await Html.PartialAsync("_Favicons")
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo"><img class="nav-logo" src="~/img/taxi.png" alt="taxi logo" asp-append-version="true" /><span class="logo-text">Taxi!</span></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+            </ul>
+        </div>
+    </nav>
+</header>
+<main role="main">
+    <div class="container">
+        @RenderBody()
+    </div>
+</main>
+
+<footer class="page-footer">
+    <div class="container">
+        <div class="row">
+            &copy; 2020 - Taxi!
+        </div>
+    </div>
+</footer>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

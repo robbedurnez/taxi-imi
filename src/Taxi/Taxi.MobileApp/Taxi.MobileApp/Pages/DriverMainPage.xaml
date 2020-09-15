@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Taxi.MobileApp.Pages.DriverMainPage"
+             NavigationPage.HasBackButton="False">
+       <ContentPage.ToolbarItems>
+              <ToolbarItem Text="Sign out"
+                           Command="{Binding SignOutCommand}"
+                           Order="Primary"
+                           Priority="2" />
+       </ContentPage.ToolbarItems>
+       <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame" x:Key="AcceptRefuseButton">
+                <Setter Property="WidthRequest" Value="100" />
+                <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="CornerRadius" Value="8" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <StackLayout Style="{StaticResource Wrapper}">
+                   <StackLayout IsVisible="{Binding ActivityToggleVisible}">
+                       <Label Text="{Binding ActiveText}"
+                              TextColor="{Binding ActiveTextColor}"
+                              Style="{StaticResource PageTitle}"
+                              Margin="0, 50, 0, 0" />
+                       <Button Text="{Binding ButtonText}"
+                               Command="{Binding ToggleActiveCommand}"
+                               Style="{StaticResource DefaultButton}"
+                               WidthRequest="200"
+                               Margin="0, 10, 0, 0" />
+                   </StackLayout>
+                   <StackLayout IsVisible="{Binding OrderRequested}">
+                       <Label Text="New order request"
+                              Style="{StaticResource PageTitle}"  />
+                       <Label Text="From:" 
+                              Style="{StaticResource DefaultLabel}" />
+                       <Label Text="{Binding FullFromAddress}" 
+                              Style="{StaticResource DefaultLabel}" />
+                       <Label Text="To:" 
+                              Style="{StaticResource DefaultLabel}" />
+                       <Label Text="{Binding FullToAddress}" 
+                              Style="{StaticResource DefaultLabel}" />
+                       <StackLayout Orientation="Horizontal" 
+                                    Margin="0, 30, 0, 0">
+                           <Frame Style="{StaticResource AcceptRefuseButton}"
+                                  BackgroundColor="LimeGreen">
+                               <Frame.GestureRecognizers>
+                                   <TapGestureRecognizer Command="{Binding AcceptOrderCommand}"
+                                                         CommandParameter="{Binding CurrentOrder}" />
+                               </Frame.GestureRecognizers>
+                               <StackLayout HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand">
+                                   <Label Text="&#xf058;" 
+                                          FontFamily="{StaticResource FontAwesomeRegular}"
+                                          HorizontalTextAlignment="Center"
+                                          TextColor="White"
+                                          FontSize="24" />
+                                   <Label Text="Accept" 
+                                          HorizontalTextAlignment="Center"
+                                          FontAttributes="Bold"
+                                          TextColor="White" />
+                               </StackLayout>
+                           </Frame>
+                           <Frame Style="{StaticResource AcceptRefuseButton}"
+                                  BackgroundColor="DarkRed">
+                               <Frame.GestureRecognizers>
+                                   <TapGestureRecognizer Command="{Binding RefuseOrderCommand}"
+                                                         CommandParameter="{Binding CurrentOrder}" />
+                               </Frame.GestureRecognizers>
+                               <StackLayout HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand">
+                                   <Label Text="&#xf057;"
+                                          FontFamily="{StaticResource FontAwesomeRegular}"
+                                          HorizontalTextAlignment="Center"
+                                          TextColor="White" 
+                                          FontSize="28" />
+                                   <Label Text="Refuse" 
+                                          HorizontalTextAlignment="Center"
+                                          FontAttributes="Bold"
+                                          TextColor="White" />
+                               </StackLayout>
+                           </Frame>
+                       </StackLayout>
+                   </StackLayout>
+                   <StackLayout IsVisible="{Binding OrderAccepted}">
+                       <Label Text="Order accepted"
+                              TextColor="{DynamicResource PrimaryTextColor}"
+                              Style="{StaticResource PageTitle}" />
+                       <StackLayout Orientation="Horizontal" Margin="0, 0, 0, 10" HorizontalOptions="CenterAndExpand">
+                              <Label Text="Order total: " Style="{StaticResource DefaultLabel}" HorizontalTextAlignment="Center" />
+                              <Label Text="{Binding OrderTotal}" Style="{StaticResource DefaultLabel}" HorizontalTextAlignment="Center" />
+                       </StackLayout>
+                       <Label Text="From:" 
+                              Style="{StaticResource DefaultLabel}" 
+                              Margin="0, 20, 0, 0" />
+                       <Label Text="{Binding FullFromAddress}" 
+                              Style="{StaticResource DefaultLabel}" />
+                       <Button Text="Open address"
+                               Command="{Binding OpenFromAddressCommand}" 
+                               Style="{StaticResource DefaultButton}" />
+                       <Label Text="To:" 
+                              Style="{StaticResource DefaultLabel}" 
+                              Margin="0, 20, 0, 0" />
+                       <Label Text="{Binding FullToAddress}" 
+                              Style="{StaticResource DefaultLabel}" />
+                       <Button Text="Open address" 
+                               Command="{Binding OpenToAddressCommand}"
+                               Style="{StaticResource DefaultButton}" />
+                       <Button Text="Finalize order"
+                               Command="{Binding FinalizeOrderCommand}"
+                               CommandParameter="{Binding CurrentOrder}"
+                               Style="{StaticResource DefaultButton}"
+                               Margin="0, 30, 0, 0" />
+                   </StackLayout>
+               </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

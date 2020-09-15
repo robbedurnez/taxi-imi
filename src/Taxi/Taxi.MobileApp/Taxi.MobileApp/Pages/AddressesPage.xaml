@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:bhv="clr-namespace:Taxi.MobileApp.Behaviors;assembly=Taxi.MobileApp"
+             xmlns:views="clr-namespace:Taxi.MobileApp.Pages;assembly=Taxi.MobileApp"
+             mc:Ignorable="d"
+             x:Class="Taxi.MobileApp.Pages.AddressesPage"
+             Title="My addresses"
+             x:Name="addressesPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="New"
+                     Command="{Binding NewAddressCommand}"
+                     Order="Primary"
+                     Priority="2" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <AbsoluteLayout BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <ScrollView AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <StackLayout>
+                    <ListView ItemsSource="{Binding Addresses}"
+                              HasUnevenRows="False"
+                              RowHeight="60"
+                              BackgroundColor="{DynamicResource PageBackgroundColor}"
+                              VerticalScrollBarVisibility="Never">
+                        <ListView.Behaviors>
+                            <bhv:EventToCommandBehavior
+                                EventName="ItemTapped"
+                                Command="{Binding EditAddressCommand}"
+                                EventArgsConverter="{StaticResource ItemTappedEventArgsConv}" />
+                        </ListView.Behaviors>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding FullAddressLine}"
+                                          Detail="{Binding City}"
+                                          TextColor="{DynamicResource PrimaryTextColor}"
+                                          DetailColor="{DynamicResource PrimaryTextColor}">
+                                    <TextCell.ContextActions>
+                                        <MenuItem Command="{Binding BindingContext.EditAddressCommand, Source={x:Reference addressesPage}}"
+                                                  CommandParameter="{Binding .}"
+                                                  Text="Edit" />
+                                        <MenuItem Command="{Binding BindingContext.DeleteAddressCommand, Source={x:Reference addressesPage}}"
+                                                  CommandParameter="{Binding .}"
+                                                  Text="Delete"
+                                                  IsDestructive="True" />
+                                    </TextCell.ContextActions>
+                                </TextCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ScrollView>
+            <views:BusyView IsVisible="{Binding IsBusy}"
+                            AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                            BackgroundColor="#CCFFFFFF"/>
+        </AbsoluteLayout>
+      </ContentPage.Content>
+    </ContentPage>

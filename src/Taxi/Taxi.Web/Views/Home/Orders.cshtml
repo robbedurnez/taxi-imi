@@ -1,0 +1,143 @@
+<div id="app">
+    <div class="row">
+        <h1>{{ company.name }}</h1>
+    </div>
+    <div class="col s12 left-align">
+        <a class="waves-effect waves-light btn" v-on:click="goToDrivers">Drivers</a>
+    </div>
+    <div v-if="!ordersLoaded" class="row">
+        <div class="loader"></div>
+    </div>
+    <div v-if="ordersLoaded" class="row">
+        <div class="col s12">
+            <table class="highlight striped centered">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Driver</th>
+                    <th>User</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Total price</th>
+                    <th>State</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="order in ordersViewModel">
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.driver }}</td>
+                    <td>{{ order.user }}</td>
+                    <td>{{ order.fromAddress }}</td>
+                    <td>{{ order.toAddress }}</td>
+                    <td>€{{ order.totalPrice }}</td>
+                    <td>{{ order.state }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row right-align">
+        <a class="waves-effect waves-light btn red darken-4" v-on:click="logOut">Logout</a>
+    </div>
+</div>
+
+<script src="~/js/axios.js"></script>
+<script src="~/js/vue.js"></script>
+<script>
+const app = new Vue({
+    el: '#app',
+    data: {
+        company: {},
+        orders: [],
+        ordersViewModel: [],
+        ordersLoaded: false
+    },
+    created: async function() {
+        await this.fetchCompany();
+        await this.fetchOrders();
+        await this.createViewModel();
+        this.ordersLoaded = true;
+    },
+    methods: {
+        fetchCompany: async function() {
+            const urlParts = window.location.href.split('/');
+            const id = urlParts[urlParts.length - 1];
+            const fetchCompanyUrl = `https://192.168.0.138:5001/api/companies/${id}`;
+            
+            await axios
+                .get(fetchCompanyUrl)
+                .then(response => {
+                    this.company = response.data;
+                })
+                .catch(error => console.error(error));
+        },
+        fetchOrders: async function() {
+            const fetchOrdersUrl = `https://192.168.0.138:5001/api/orders/getbycompanyid/${this.company.id}`;
+            
+            await axios
+                .get(fetchOrdersUrl)
+                .then(response => {
+                    this.orders = response.data;
+                })
+                .catch(error => console.error(error));
+        },
+        goToDrivers: function() {
+            window.location.href = `https://192.168.0.138:5003/home/drivers/${this.company.id}`;
+        },
+        fetchAddress: async function(id) {
+            const fetchAddressUrl = `https://192.168.0.138:5001/api/addresses/${id}`;
+            return await axios
+                .get(fetchAddressUrl)
+                .then(response => {
+                    return response.data;
+                })
+                .catch(error => console.error(error));
+        },
+        fetchDriver: async function(id) {
+            const fetchDriverUrl = `https://192.168.0.138:5001/api/drivers/${id}`;
+             
+            return await axios
+                .get(fetchDriverUrl)
+                .then(response => {
+                    return response.data;
+                })
+                .catch(error => console.error(error));
+        },
+        fetchUser: async function(id) {
+            const fetchUserUrl = `https://192.168.0.138:5001/api/users/${id}`;
+            return await axios
+                .get(fetchUserUrl)
+                .then(response => {
+                    return response.data;
+                })
+                .catch(error => console.error(error));
+        },
+        createViewModel: async function() {
+            await this.asyncForEach(this.orders, async order => {
+                let driver = await this.fetchDriver(order.driverId);
+                let user = await this.fetchUser(order.userId);
+                let fromAddress = await this.fetchAddress(order.fromId);
+                let toAddress = await this.fetchAddress(order.toId);
+                
+                this.ordersViewModel.push({
+                    id: order.id,
+                    driver: `${driver.firstName} ${driver.lastName}`,
+                    user: `${user.firstName} ${user.lastName}`,
+                    fromAddress: `${fromAddress.addressLine1} ${fromAddress.addressLine2}, ${fromAddress.city}`,
+                    toAddress: `${toAddress.addressLine1} ${toAddress.addressLine2}, ${toAddress.city}`,
+                    totalPrice: order.totalPrice,
+                    state: order.state
+                });
+            });
+        },
+        asyncForEach: async function(array, callback) {
+            for (let index = 0; index < array.length; index++) {
+                await callback(array[index], index, array);
+            }
+        },
+        logOut: function() {
+            window.location.href = 'https://192.168.0.138:5003/home/login';
+        }
+    }
+});
+</script>

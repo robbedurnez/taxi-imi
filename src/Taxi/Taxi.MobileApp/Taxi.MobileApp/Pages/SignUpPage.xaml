@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:Taxi.MobileApp.Pages;assembly=Taxi.MobileApp"
+             xmlns:controls="clr-namespace:Taxi.MobileApp.Controls;assembly=Taxi.MobileApp"
+             mc:Ignorable="d"
+             x:Class="Taxi.MobileApp.Pages.SignUpPage">
+    <ContentPage.Content>
+        <AbsoluteLayout BackgroundColor="{DynamicResource DarkPageBackgroundColor}">
+            <ScrollView AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <StackLayout Style="{StaticResource BackgroundWrapper}">
+                    <Image Source="taxi.png" Margin="0, 20, 0, 20" HorizontalOptions="CenterAndExpand" />
+                        <controls:CustomEntry Text="{Binding FirstName}"
+                                              Placeholder="First name"
+                                              Style="{StaticResource DarkEntry}"
+                                              ClearButtonVisibility="WhileEditing" />
+                        <Label Text="{Binding FirstNameError}" Style="{StaticResource ErrorLabel}" />
+                        <controls:CustomEntry Text="{Binding LastName}"
+                                              Placeholder="Last name"
+                                              Style="{StaticResource DarkEntry}"
+                                              ClearButtonVisibility="WhileEditing" />
+                        <Label Text="{Binding LastNameError}" Style="{StaticResource ErrorLabel}" />
+                        <controls:CustomEntry Text="{Binding Email}"
+                                              Placeholder="Email"
+                                              Style="{StaticResource DarkEntry}"
+                                              ClearButtonVisibility="WhileEditing" />
+                        <Label Text="{Binding EmailError}" Style="{StaticResource ErrorLabel}" />
+                        <controls:CustomEntry Text="{Binding Password}"
+                                              Placeholder="Password"
+                                              Style="{StaticResource DarkEntry}" 
+                                              ClearButtonVisibility="WhileEditing"
+                                              IsPassword="True" />
+                        <Label Text="{Binding PasswordError}" Style="{StaticResource ErrorLabel}" />
+                        <controls:CustomEntry Text="{Binding PhoneNumber}"
+                                              Placeholder="Telephone"
+                                              Style="{StaticResource DarkEntry}"
+                                              ClearButtonVisibility="WhileEditing" />
+                        <Label Text="{Binding PhoneNumberError}" Style="{StaticResource ErrorLabel}" />
+                        <Button Text="Sign up"
+                                Command="{Binding SignUpCommand}"
+                                Style="{StaticResource WhiteButton}" />
+                    </StackLayout>
+            </ScrollView>
+            <views:BusyView IsVisible="{Binding IsBusy}" 
+                            AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                            BackgroundColor="#CCFFFFFF"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

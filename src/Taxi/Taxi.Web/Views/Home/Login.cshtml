@@ -1,0 +1,74 @@
+@{
+    Layout = "_VisitorLayout";
+}
+
+<div id="app">
+    <div id="modal1" class="modal modal-close" v-if="loginFailedMessage !== ''">
+        <div class="modal-content">
+            <p>{{ loginFailedMessage }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <h1>{{title}}</h1>
+    </div>
+    <div class="row">
+        <div class="input-field">
+            <input v-model="loginCredentials.email" type="email" class="validate" placeholder="Email" required>
+        </div>
+        <div class="input-field">
+            <input v-model="loginCredentials.password" type="password" class="validate" placeholder="Password" required>
+        </div>
+        <p>
+            <label>
+                <input type="checkbox" v-model="loginCredentials.isPersistent"/>
+                <span>Remember me</span>
+            </label>
+        </p>
+        <button v-on:click="login" class="btn waves-effect waves-light">Login</button>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/js/vue.js"></script>
+    <script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            loginFailedMessage: '',
+            title: 'Welcome to the Taxi! dashboard',
+            loginCredentials: {
+                email: '',
+                password: '',
+                isPersistent: false
+            }
+        },
+        methods: {
+            login: function() {
+                const signInUrl = 'https://192.168.0.138:5001/api/users/companysignin';
+                this.title = 'Logging in...';
+                const credentials = this.loginCredentials;
+                
+                axios
+                    .post(signInUrl, {
+                        email: credentials.email,
+                        password: credentials.password,
+                        isPersistent: credentials.isPersistent
+                    })
+                    .then(response => {
+                        window.location.href = `https://192.168.0.138:5003/home/drivers/${response.data.id}`;
+                    })
+                    .catch(error => {
+                        this.loginFailedMessage = error.response?.data ?? 'Login failed';
+                        (function ($) {
+                            $(function () {     
+                                $('.modal').modal();
+                                $('#modal1').modal('open');
+                            });
+                        })(jQuery);
+                    });
+            }
+        }
+    });
+</script>
+}

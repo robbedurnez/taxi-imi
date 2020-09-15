@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Taxi.MobileApp.Pages;assembly=Taxi.MobileApp"
+             xmlns:controls="clr-namespace:Taxi.MobileApp.Controls;assembly=Taxi.MobileApp"
+             x:Class="Taxi.MobileApp.Pages.OrderPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="AddNewAddress">
+                <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="0, 0, 0, 20" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <AbsoluteLayout BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <ScrollView AbsoluteLayout.LayoutFlags="All"
+                        AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <StackLayout Style="{StaticResource Wrapper}">
+                    <Label Text="{Binding CompanyName}"
+                           Style="{StaticResource PageTitle}" />
+                    <Label Text="{Binding IsAvailable}"
+                           TextColor="{Binding IsAvailableColor}"
+                           HorizontalOptions="CenterAndExpand"
+                           Margin="0, 0, 0, 20"/>
+                    <StackLayout IsVisible="{Binding DetailsVisible}">
+                        <Grid Margin="0, 0, 0, 20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Start price"
+                                   Style="{StaticResource DefaultLabel}"
+                                   Grid.Row="0" Grid.Column="0"
+                                   HorizontalTextAlignment="Start"
+                                   Margin="10, 0, 0, 0" />
+                            <Label Text="{Binding StartPrice}"
+                                   Style="{StaticResource DefaultLabel}"
+                                   Grid.Row="0" Grid.Column="1"
+                                   HorizontalTextAlignment="End"
+                                   Margin="0, 0, 20, 0" />
+                            <Label Text="€/Km"
+                                   Style="{StaticResource DefaultLabel}"
+                                   Grid.Row="1" Grid.Column="0"
+                                   HorizontalTextAlignment="Start"
+                                   Margin="10, 0, 0, 0" />
+                            <Label Text="{Binding PricePerKm}"
+                                   Style="{StaticResource DefaultLabel}" Grid.Row="1" Grid.Column="1"
+                                   HorizontalTextAlignment="End"
+                                   Margin="0, 0, 20, 0" />
+                        </Grid>
+                        <Label Text="From" Style="{StaticResource DefaultLabel}" />
+                        <controls:CustomPicker
+                            CornerRadius="12"
+                            NewBackgroundColor="{DynamicResource PrimaryEntryColor}"
+                            TextColor="{DynamicResource PrimaryEntryTextColor}"
+                            Title="Select an address"
+                            ItemsSource="{Binding Addresses}"
+                            ItemDisplayBinding="{Binding FullAddress}"
+                            SelectedItem="{Binding FromAddress}"
+                            Margin="0, 0, 0, 10" />
+                        <Label Text="{Binding FromPickerErrorText}"
+                               IsVisible="{Binding FromPickerErrorVisible}"
+                               Style="{StaticResource ErrorLabel}" />
+                        <Label Text="To" Style="{StaticResource DefaultLabel}" />
+                        <controls:CustomPicker
+                            CornerRadius="12"
+                            NewBackgroundColor="{DynamicResource PrimaryEntryColor}"
+                            TextColor="{DynamicResource PrimaryEntryTextColor}"
+                            Title="Select an address"
+                            ItemsSource="{Binding Addresses}"
+                            ItemDisplayBinding="{Binding FullAddress}"
+                            SelectedItem="{Binding ToAddress}"
+                            Margin="0, 0, 0, 5" />
+                        <Label Text="{Binding ToPickerErrorText}"
+                               IsVisible="{Binding ToPickerErrorVisible}"
+                               Style="{StaticResource ErrorLabel}" />
+                        <Label Text="ADD NEW ADDRESS"
+                                Style="{StaticResource AddNewAddress}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NewAddressCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Button Text="Place order"
+                                Command="{Binding OrderSummaryCommand}"
+                                Style="{StaticResource DefaultButton}" />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <views:BusyView IsVisible="{Binding IsBusy}"
+                            AbsoluteLayout.LayoutFlags="All"
+                            AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                            BackgroundColor="#CCFFFFFF"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

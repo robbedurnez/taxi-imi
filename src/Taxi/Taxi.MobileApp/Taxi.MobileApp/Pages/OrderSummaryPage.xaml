@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Taxi.MobileApp.Pages.OrderSummaryPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <StackLayout Style="{StaticResource Wrapper}">
+                <Label Text="Summary"
+                       Style="{StaticResource PageTitle}" />
+                <Label Text="From:" Style="{StaticResource DefaultLabel}" />
+                <Label Text="{Binding FromAddress}" Style="{StaticResource DefaultLabel}" Margin="0, 0, 0, 20" />
+                <Label Text="To:" Style="{StaticResource DefaultLabel}" />
+                <Label Text="{Binding ToAddress}" Style="{StaticResource DefaultLabel}" Margin="0, 0, 0, 20" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Total price:" Style="{StaticResource DefaultLabel}" Grid.Row="0" Grid.Column="0" />
+                    <Label Text="{Binding TotalPrice}"
+                           Style="{StaticResource DefaultLabel}"
+                           Grid.Row="0" Grid.Column="1"
+                           HorizontalTextAlignment="Center" />
+                </Grid>
+                <Button Text="Confirm" 
+                        Command="{Binding PlaceOrderCommand}" 
+                        Style="{StaticResource DefaultButton}"
+                        Margin="0, 30, 0, 0"  />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

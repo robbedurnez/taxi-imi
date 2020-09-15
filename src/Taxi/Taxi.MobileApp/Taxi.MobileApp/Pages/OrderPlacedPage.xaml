@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+             x:Class="Taxi.MobileApp.Pages.OrderPlacedPage"
+             NavigationPage.HasBackButton="False">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{DynamicResource PageBackgroundColor}">
+            <StackLayout Style="{StaticResource Wrapper}">
+                <forms:AnimationView
+                    Animation="{Binding CurrentAnimation}"
+                    Loop="{Binding AnimationLoop}"
+                    IsPlaying="True"
+                    HorizontalOptions="CenterAndExpand"
+                    HeightRequest="300"
+                    WidthRequest="300" />
+                <Label Text="{Binding MainText}"
+                       HorizontalTextAlignment="Center"
+                       Style="{StaticResource DefaultLabel}"
+                       Margin="0, 0, 0, 20"/>
+                <Grid IsVisible="{Binding OrderHandled}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Total price:"
+                           Style="{StaticResource DefaultLabel}"
+                           Grid.Row="0" Grid.Column="0" />
+                    <Label Text="{Binding TotalPrice}"
+                           Style="{StaticResource DefaultLabel}"
+                           Grid.Row="0" Grid.Column="1"
+                           HorizontalTextAlignment="Center" />
+                </Grid>
+                <Button Text="Return to map"
+                        Command="{Binding ReturnToMapCommand}"
+                        IsVisible="{Binding OrderFinalized}"
+                        Style="{StaticResource DefaultButton}" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

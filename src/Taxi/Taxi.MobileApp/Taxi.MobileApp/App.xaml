@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Taxi.MobileApp.Converters;assembly=Taxi.MobileApp"
+             xmlns:freshMvvm="clr-namespace:FreshMvvm;assembly=FreshMvvm"
+             xmlns:controls="clr-namespace:Taxi.MobileApp.Controls;assembly=Taxi.MobileApp"
+             mc:Ignorable="d"
+             x:Class="Taxi.MobileApp.App">
+    <Application.Resources>
+        <ResourceDictionary Source="Themes/LightTheme.xaml" />
+
+        <converters:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConv" />
+
+        <Style TargetType="freshMvvm:FreshNavigationContainer">
+            <Setter Property="BarBackgroundColor" Value="{DynamicResource NavigationBarColor}" />
+            <Setter Property="BarTextColor" Value="White" />
+        </Style>
+
+        <OnPlatform x:TypeArguments="x:String"
+                    x:Key="FontAwesomeBrands">
+            <On Platform="Android"
+          Value="FontAwesome5Brands.otf#Regular" />
+            <On Platform="iOS"
+          Value="FontAwesome5Brands-Regular" />
+        </OnPlatform>
+
+        <OnPlatform x:TypeArguments="x:String"
+                x:Key="FontAwesomeSolid">
+            <On Platform="Android"
+          Value="FontAwesome5Solid.otf#Regular" />
+            <On Platform="iOS"
+          Value="FontAwesome5Free-Solid" />
+        </OnPlatform>
+
+        <OnPlatform x:TypeArguments="x:String"
+                x:Key="FontAwesomeRegular">
+            <On Platform="Android"
+          Value="FontAwesome5Regular.otf#Regular" />
+            <On Platform="iOS"
+          Value="FontAwesome5Free-Regular" />
+        </OnPlatform>
+
+        <OnPlatform x:Key="DarkEntryBorderWidth"
+                    x:TypeArguments="x:Int32">
+            <On Platform="iOS" Value="1" />
+            <On Platform="Android" Value="3" />
+        </OnPlatform>
+
+        <Style TargetType="controls:CustomEntry" x:Key="DarkEntry">
+            <Setter Property="CornerRadius" Value="13" />
+            <Setter Property="TextColor" Value="{DynamicResource DarkEntryTextColor}" />
+            <Setter Property="PlaceholderColor" Value="{DynamicResource DarkEntryTextColor}" />
+            <Setter Property="WidthRequest" Value="300" />
+            <Setter Property="HeightRequest" Value="45" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="BorderWidth" Value="{StaticResource DarkEntryBorderWidth}" />
+            <Setter Property="BorderColor" Value="White" />
+            <Setter Property="NewBackgroundColor" Value="{DynamicResource DarkEntryBackgroundColor}" />
+        </Style>
+
+        <Style TargetType="controls:CustomEntry" x:Key="Entry">
+            <Setter Property="CornerRadius" Value="13" />
+            <Setter Property="TextColor" Value="{DynamicResource PrimaryEntryTextColor}" />
+            <Setter Property="PlaceholderColor" Value="{DynamicResource PrimaryEntryTextColor}" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="BorderWidth" Value="{StaticResource DarkEntryBorderWidth}" />
+            <Setter Property="BorderColor" Value="{DynamicResource PrimaryEntryBorderColor}" />
+            <Setter Property="NewBackgroundColor" Value="{DynamicResource PrimaryEntryColor}" />
+        </Style>
+
+        <Style TargetType="Button" x:Key="WhiteButton">
+            <Setter Property="BackgroundColor" Value="{DynamicResource SecondaryButtonColor}" />
+            <Setter Property="TextColor" Value="{DynamicResource SecondaryButtonTextColor}" />
+            <Setter Property="WidthRequest" Value="200" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Margin" Value="0, 30, 0, 0" />
+        </Style>
+
+        <Style TargetType="StackLayout" x:Key="Wrapper">
+            <Setter Property="WidthRequest" Value="350" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="ErrorLabel">
+            <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
+            <Setter Property="WidthRequest" Value="300" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+        </Style>
+
+        <Style TargetType="Button" x:Key="DefaultButton">
+            <Setter Property="WidthRequest" Value="300" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryButtonColor}" />
+            <Setter Property="TextColor" Value="{DynamicResource PrimaryButtonTextColor}" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="PageTitle">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
+            <Setter Property="FontSize" Value="Title" />
+            <Setter Property="FontFamily" Value="Proxima Nova" />
+            <Setter Property="Margin" Value="0, 20, 0, 0" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="DefaultLabel">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
+        </Style>
+
+        <Style TargetType="StackLayout" x:Key="BackgroundWrapper">
+            <Setter Property="BackgroundColor" Value="{DynamicResource DarkPageBackgroundColor}" />
+        </Style>
+    </Application.Resources>
+</Application>

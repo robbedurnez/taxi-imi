@@ -1,0 +1,142 @@
+<div id="app">
+    <div class="row">
+        <h1>{{ company.name }}</h1>
+    </div>
+    <div class="row">
+        <div class="col s12 left-align">
+            <a class="waves-effect waves-light btn" v-on:click="goToOrders">Orders</a>
+        </div>
+    </div>
+    <div v-if="!driversLoaded" class="row">
+        <div class="loader"></div>
+    </div>
+    <div v-if="driversLoaded" class="row">
+        <div class="col s12">
+            <table class="highlight striped centered">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Active</th>
+                    <th>Available</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="driver in drivers">
+                    <td>{{ driver.id }}</td>
+                    <td>{{ `${driver.firstName} ${driver.lastName}` }}</td>
+                    <td>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" v-model="driver.isActive" v-on:change="toggleActive(driver)">
+                                <span class="lever switch-lever"></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="switch">
+                            <label>
+                                <input type="checkbox" v-model="driver.isAvailable" :disabled="!driver.isActive" v-on:change="toggleAvailable(driver)">
+                                <span class="lever switch-lever"></span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row right-align">
+        <div class="col s6 left-align">
+            <a class="waves-effect waves-light btn" v-on:click="newDriver">New driver</a>
+        </div>
+        <div class="col s6 right-align">
+            <a class="waves-effect waves-light btn red darken-4" v-on:click="logOut">Logout</a>
+        </div>
+    </div>
+</div>
+<script src="~/js/axios.js"></script>
+<script src="~/js/vue.js"></script>
+<script>
+const app = new Vue({
+    el: '#app',
+    data: {
+        company: {},
+        drivers: [],
+        driversLoaded: false
+    },
+    created: async function() {
+        await this.fetchCompany();
+        await this.fetchDrivers();
+        this.driversLoaded = true;
+    },
+    methods: {
+        fetchCompany: async function() {
+            const urlParts = window.location.href.split('/');
+            const id = urlParts[urlParts.length - 1];
+            const fetchCompanyUrl = `https://192.168.0.138:5001/api/companies/${id}`;
+            
+            await axios
+                .get(fetchCompanyUrl)
+                .then(response => {
+                    this.company = response.data;
+                })
+                .catch(error => console.error(error));
+        },
+        fetchDrivers: async function() {
+            const fetchDriversUrl = `https://192.168.0.138:5001/api/drivers/getbycompanyid/${this.company.id}`;
+            
+            await axios
+                .get(fetchDriversUrl)
+                .then(response => {
+                    this.drivers = response.data;
+                })
+                .catch(error => console.error(error));
+        },
+        toggleAvailable: function(driver) {
+            const url = `https://192.168.0.138:5001/api/drivers/toggleavailable`;
+            
+            axios
+                .put(url, driver)
+                .then(response => {
+                    const d = this.drivers.find(dr => dr.id === response.data.id);
+                    
+                    d.isAvailable = response.data.isAvailable;
+                })
+                .catch (error => console.error(error));
+        },
+        toggleActive: function(driver) {
+            const url = `https://192.168.0.138:5001/api/drivers/toggleactive`;
+            
+            axios
+                .put(url, driver)
+                .then(response => {
+                    const d = this.drivers.find(dr => dr.id === response.data.id);
+                    
+                    d.isActive = response.data.isActive;
+                    d.isAvailable = response.data.isAvailable;
+                })
+                .catch (error => console.error(error));
+        },
+        goToOrders: function() {
+            window.location.href = `https://192.168.0.138:5003/home/orders/${this.company.id}`;
+        },
+        logOut: function() {
+            window.location.href = 'https://192.168.0.138:5003/home/login';
+        },
+        newDriver: function() {
+            window.location.href = `https://192.168.0.138:5003/home/drivers/new/${this.company.id}`;
+        },
+        deleteDriver: function(id) {
+            const deleteDriverUrl = `https://192.168.0.138:5001/api/drivers/${id}`;
+            
+            axios
+                .delete(deleteDriverUrl)
+                .then(response => {
+                    this.fetchDrivers(this.company.id);
+                })
+                .catch(error => console.error(error));
+        }
+    }
+});
+</script>

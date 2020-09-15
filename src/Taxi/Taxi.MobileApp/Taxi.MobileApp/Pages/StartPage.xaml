@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:Taxi.Domain.Models;assembly=Taxi.Domain"
+             mc:Ignorable="d"
+             x:Class="Taxi.MobileApp.Pages.StartPage"
+             x:Name="Page">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="FlexLayout" Class="BigButton">
+                <Setter Property="WidthRequest" Value="100" />
+                <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Direction" Value="Column" />
+                <Setter Property="AlignItems" Value="Center" />
+                <Setter Property="JustifyContent" Value="Center" />
+            </Style>
+            <Style TargetType="Label" Class="Icon">
+                <Setter Property="FontSize" Value="40" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+            <Style TargetType="Label" Class="ButtonText">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="Margin" Value="0, 10, 0, 0" />
+            </Style>
+            <Style TargetType="Grid" Class="Wrapper">
+                <Setter Property="BackgroundColor" Value="{DynamicResource DarkPageBackgroundColor}" />
+            </Style>
+            <Style TargetType="Label" Class="Header">
+                <Setter Property="FontSize" Value="30" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="Frame" Class="ButtonFrame">
+                <Setter Property="BackgroundColor" Value="White" />
+            </Style>
+            <Style TargetType="FlexLayout" Class="ButtonContainer">
+                <Setter Property="JustifyContent" Value="SpaceAround" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid StyleClass="Wrapper">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="152" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="320" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <BoxView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" />
+            <BoxView Grid.Column="0" Grid.Row="1" />
+            <Label Grid.Column="1" Grid.Row="1" Text="Who are you?" StyleClass="Header" />
+            <BoxView Grid.Column="2" Grid.Row="1" />
+            <BoxView Grid.Column="0" Grid.Row="2" />
+            <FlexLayout Grid.Column="1" Grid.Row="2" StyleClass="ButtonContainer">
+                <Frame CornerRadius="8" StyleClass="ButtonFrame">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding UserTypeTappedCommand}" CommandParameter="{x:Static models:UserType.Driver}" />
+                    </Frame.GestureRecognizers>
+                    <FlexLayout StyleClass="BigButton">
+                        <Label Text="&#xf1ba;" FontFamily="{StaticResource FontAwesomeSolid}" StyleClass="Icon" />
+                        <Label Text="Driver" StyleClass="ButtonText" />
+                    </FlexLayout>
+                </Frame>
+                <Frame CornerRadius="8" StyleClass="ButtonFrame">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding UserTypeTappedCommand}" CommandParameter="{x:Static models:UserType.Customer}" />
+                    </Frame.GestureRecognizers>
+                    <FlexLayout StyleClass="BigButton">
+                        <Label Text="&#xf007;" FontFamily="{StaticResource FontAwesomeSolid}" StyleClass="Icon" />
+                        <Label Text="User" StyleClass="ButtonText" />
+                    </FlexLayout>
+                </Frame>
+            </FlexLayout>
+            <BoxView Grid.Column="2" Grid.Row="2" />
+            <BoxView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

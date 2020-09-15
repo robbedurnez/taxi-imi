@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Taxi.MobileApp.Pages.SettingsPage">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="{DynamicResource DarkPageBackgroundColor}">
+            <TableView BackgroundColor="{DynamicResource PageBackgroundColor}">
+                <TableRoot>
+                    <TableSection>
+                        <TextCell Text="Addresses"
+                                  Command="{Binding AddressesCommand}"
+                                  TextColor="{DynamicResource PrimaryTextColor}" />
+
+                        <TextCell Text="Sign out"
+                                  Command="{Binding SignOutCommand}"
+                                  TextColor="Red" />
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

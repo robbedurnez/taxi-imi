@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:models="clr-namespace:Taxi.MobileApp.Models;assembly=Taxi.MobileApp"
+             mc:Ignorable="d"
+             x:Class="Taxi.MobileApp.Pages.MainPage"
+             NavigationPage.HasBackButton="False">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Settings"
+                     Command="{Binding SettingsCommand}"
+                     Order="Primary"
+                     Priority="2" />
+    </ContentPage.ToolbarItems>
+    <StackLayout BackgroundColor="{DynamicResource PageBackgroundColor}">
+        <models:TaxiMap
+            MapType="Street"
+            IsShowingUser="true"
+            CenterPosition="{Binding CustomerPosition}"
+            ItemsSource="{Binding AvailableDriversPins}" >
+            <models:TaxiMap.ItemTemplate>
+                <DataTemplate>
+                    <models:CustomPin
+                        Position="{Binding Position}"
+                        DriverId="{Binding DriverId}"
+                        Label="{Binding Label}"
+                        MarkerClicked="Pin_OnMarkerClicked"/>
+                </DataTemplate>
+            </models:TaxiMap.ItemTemplate>
+        </models:TaxiMap>
+    </StackLayout>
+</ContentPage>

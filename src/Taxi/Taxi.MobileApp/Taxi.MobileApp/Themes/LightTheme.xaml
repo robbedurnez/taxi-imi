@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="Taxi.MobileApp.Themes.LightTheme">
+    <Color x:Key="PageBackgroundColor">White</Color>
+    <Color x:Key="DarkPageBackgroundColor">DarkRed</Color>
+    <Color x:Key="NavigationBarColor">DarkRed</Color>
+    <Color x:Key="DarkEntryBackgroundColor">#721300</Color>
+    <Color x:Key="DarkEntryTextColor">White</Color>
+    <Color x:Key="PrimaryButtonColor">DarkRed</Color>
+    <Color x:Key="SecondaryButtonColor">White</Color>
+    <Color x:Key="PrimaryButtonTextColor">White</Color>
+    <Color x:Key="SecondaryButtonTextColor">Black</Color>
+    <Color x:Key="PrimaryTextColor">Black</Color>
+    <Color x:Key="SecondaryTextColor">White</Color>
+    <Color x:Key="PrimaryEntryColor">White</Color>
+    <Color x:Key="PrimaryEntryTextColor">Black</Color>
+    <Color x:Key="PrimaryEntryBorderColor">Black</Color>
+
+</ResourceDictionary>

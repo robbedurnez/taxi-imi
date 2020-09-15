@@ -1,0 +1,126 @@
+<div id="app">
+    <div id="modal1" class="modal modal-close" v-if="signUpFailedMessage !== ''">
+        <div class="modal-content">
+            <p>{{ signUpFailedMessage }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <h1>{{ company.name }}</h1>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input v-model="driver.firstName" id="first_name" type="text" class="validate" />
+                    <label for="first_name">First Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input v-model="driver.lastName" id="last_name" type="text" class="validate" />
+                    <label for="last_name">Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input v-model="driver.email" id="email" type="email" class="validate" />
+                    <label for="email">Email address</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input v-model="driver.phoneNumber" id="phoneNumber" type="tel" class="validate" />
+                    <label for="phoneNumber">Phone number</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input v-model="driver.password" id="password" type="password" class="validate" />
+                    <label for="password">Password</label>
+                </div>
+                <div class="input-field col s6">
+                    <input v-model="confirmPassword" id="confirmPassword" type="password" class="validate" />
+                    <label for="confirmPassword">Confirm password</label>
+                </div>
+            </div>
+            <button v-on:click="createDriver" class="btn waves-effect waves-light">Create driver</button>
+            <button v-on:click="toPreviousPage" class="btn waves-effect waves-light">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/axios.js"></script>
+<script src="~/js/vue.js"></script>
+<script>
+const app = new Vue({
+    el: '#app',
+    data: {
+        company: {},
+        confirmPassword: '',
+        signUpFailedMessage: '',
+        driver: {
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            email: '',
+            password: '',
+            userType: '',
+            companyId: '',
+            name: '',
+            address: null
+        }
+    },
+    created: async function() {
+        await this.fetchCompany();
+        this.driver.companyId = this.company.id;
+        this.driver.userType = 'Driver';
+    },
+    methods: {
+        fetchCompany: async function() {
+            const urlParts = window.location.href.split('/');
+            const id = urlParts[urlParts.length - 1];
+            const fetchCompanyUrl = `https://192.168.0.138:5001/api/companies/${id}`;
+            
+            await axios
+                .get(fetchCompanyUrl)
+                .then(response => {
+                    this.company = response.data;
+                })
+                .catch(error => console.error(error));
+        },
+        createDriver: async function() {
+            const createUserUrl = 'https://192.168.0.138:5001/api/users/signup';
+            
+            if (this.confirmPassword !== this.driver.password) {
+                this.signUpFailedMessage = 'Passwords don\'t match.';
+                (function ($) {
+                    $(function () {     
+                        $('.modal').modal();
+                        $('#modal1').modal('open');
+                    });
+                })(jQuery);
+                this.confirmPassword = '';
+                this.driver.password = '';
+                
+                return;
+            }
+            
+            await axios
+                .post(createUserUrl, this.driver)
+                .then(response => {
+                    window.location.href = `https://192.168.0.138:5003/home/drivers/${this.company.id}`;
+                })
+                .catch(error => {
+                    this.signUpFailedMessage = error.response?.data ?? 'Account creation failed';
+                    (function ($) {
+                        $(function () {     
+                            $('.modal').modal();
+                            $('#modal1').modal('open');
+                        });
+                    })(jQuery);
+                });
+        },
+        toPreviousPage: function() {
+            window.location.href= `https://192.168.0.138:5003/home/drivers/${this.company.id}`;
+        }
+    }
+});
+</script>
