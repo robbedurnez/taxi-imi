@@ -20,4 +20,4 @@ Gebruikers kunnen via een kaart beschikbare taxi's zien en kunnen, na het bekijk
 
 ### User secrets:
 DbUsername: sa
-DbPassword: RobeDurnez1!
+DbPassword: StrongPassword1!
