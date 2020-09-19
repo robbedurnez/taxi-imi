@@ -4,10 +4,11 @@ using Android.Runtime;
 using Android.OS;
 using Lottie.Forms.Droid;
 using Plugin.CurrentActivity;
+using System.Net;
 
 namespace Taxi.MobileApp.Droid
 {
-    [Activity(Label = "Taxi!", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "Taxi!", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = false, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -16,6 +17,7 @@ namespace Taxi.MobileApp.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            ServicePointManager.ServerCertificateValidationCallback += (o, cert, chain, errors) => true;
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             Xamarin.FormsMaps.Init(this, savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
