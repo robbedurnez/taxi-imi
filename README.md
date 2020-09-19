@@ -13,7 +13,7 @@ Gebruikers kunnen via een kaart beschikbare taxi's zien en kunnen, na het bekijk
     - Wachtwoord: TaxiTest1?
 - Driver1:
     - Email: driver1@taxi.com
-    - Wachtwoord: TaxiTest2?
+    - Wachtwoord: TaxiTest3?
 - Company:
     - Email: company1@taxi.com
     - Wachtwoord: TaxiTest5?
