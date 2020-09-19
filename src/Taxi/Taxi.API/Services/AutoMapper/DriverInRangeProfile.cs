@@ -7,7 +7,9 @@ namespace Taxi.API.Services.AutoMapper
     {
         public DriverInRangeProfile()
         {
-            CreateMap<DriverDto, DriverInRangeDto>();
+            CreateMap<DriverDto, DriverInRangeDto>()
+                .ForMember(d => d.DriverId, opt => opt.MapFrom(dir => dir.Id))
+                .ReverseMap();
         }
     }
 }
