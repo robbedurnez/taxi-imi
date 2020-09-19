@@ -160,7 +160,7 @@ namespace Taxi.MobileApp.ViewModels
                 }
                 catch (Exception)
                 {
-                    await CoreMethods.DisplayAlert("Error", "Error while saving address", "Ok");
+                    await CoreMethods.DisplayAlert("Error", "Location does not exist", "Return");
                 }
                 finally
                 {
